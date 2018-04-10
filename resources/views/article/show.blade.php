@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-    <title>Learn Laravel 5</title>
-
-    <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+@include('editor::head')
+@section('content')
 
 <div id="content" style="padding: 50px;">
 
@@ -25,7 +16,7 @@
     </div>
     <div id="content" style="margin: 20px;">
 
-            {{ $article->body }}
+            {!! Parsedown::instance()->setMarkupEscaped(true)->text($article->body) !!}
 
     </div>
 
@@ -43,7 +34,7 @@
 
                     <div class="one" style="border-top: solid 20px #efefef; padding: 5px 20px;">
                         <div class="nickname" data="{{ $comment->nickname }}">
-                            @if ($comment->website)
+                            @if (checkdnsrr($comment->website))
                                 <a href="{{ $comment->website }}">
                                     <h3>{{ $comment->nickname }}</h3>
                                 </a>
@@ -54,7 +45,7 @@
                         </div>
                         <div class="content">
                             <p style="padding: 20px;">
-                                {{ $comment->content }}
+                                {!! Parsedown::instance()->setMarkupEscaped(true)->text($comment->content) !!}
                             </p>
                         </div>
                         <div class="reply" style="text-align: right; padding: 5px;">
@@ -82,7 +73,9 @@
                 </div>
                 <div class="form-group">
                     <label>Content</label>
-                    <textarea name="content" id="newFormContent" class="form-control" rows="10" required="required"></textarea>
+                    <div id="mdEditor">
+                        <textarea name="content" id="newFormContent" class="form-control" rows="10" required="required"></textarea>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-lg btn-success col-lg-12">Submit</button>
             </form>
@@ -100,5 +93,4 @@
 
 </div>
 
-</body>
-</html>
+@endsection

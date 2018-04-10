@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
+@include('editor::head')
 @section('content')
     <div class="container">
         <div class="row">
@@ -20,7 +21,9 @@
                             {{ csrf_field() }}
                             <input type="text" name="title" class="form-control" required="required" placeholder="请输入标题" value="{{ $article->title }}">
                             <br>
-                            <textarea name="body" rows="10" class="form-control" required="required" placeholder="请输入内容">{{ $article->body }}</textarea>
+                            <div id="mdEditor">
+                                <textarea name="body" rows="10" class="form-control" required="required" placeholder="请输入内容">{{ $article->body }}</textarea>
+                            </div>
                             <br>
                             <button class="btn btn-lg btn-info">提交修改</button>
                         </form>
