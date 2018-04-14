@@ -25,20 +25,5 @@ class CommentController extends Controller
             return redirect()->back()->withInput()->withErrors('评论发表失败！');
         }
     }
-
-    /**
-     * use mail to inform article author if has new comment
-     *
-     * @param  Request  $request
-     * @param  int  $articleId
-     * @return Response
-     */
-    public function ship(Request $request, $commentId)
-    {
-        $comment = Comment::findOrFail($commentId);
-
-        // 处理订单...
-
-        Mail::to($request->user())->send(new NewComment($comment));
-    }
+    
 }
