@@ -48,3 +48,8 @@ Route::get('issues-deadline', ['as'=>'issues-deadline','uses'=>'IssueController@
 
 Route::get('login/github', 'Auth\LoginController@redirectToProvider');
 Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::post('/markdown/uploads', function (){
+    $data = \Axhello\Editor\MdEditor::uploadImgFile('img');
+    return json_encode($data);
+});
