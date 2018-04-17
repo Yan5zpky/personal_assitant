@@ -31,7 +31,6 @@
                 <thead>
                 <th>Id</th>
                 <th>Title</th>
-                <th>Author</th>
                 <th>Creation Date</th>
                 <th>Action</th>
                 </thead>
@@ -41,16 +40,17 @@
                         <tr>
                             <td>{{ ++$key }}</td>
                             <td>{{ $article->title }}</td>
-                            <td>{{ $article->name }}</td>
                             <td>{{ $article->created_at }}</td>
                             <td>
                                 <a href="{{ url('articles/'.$article->id) }}" class="btn btn-success">评论</a>
-                                <a href="{{ url('articles/'.$article->id.'/edit') }}" class="btn btn-success">编辑</a>
-                                <form action="{{ url('articles/'.$article->id) }}" method="POST" style="display: inline;">
-                                    {{ method_field('DELETE') }}
-                                    {{ csrf_field() }}
-                                    <button type="submit" class="btn btn-danger">删除</button>
-                                </form>
+                                @if($article->user_id == Auth::user()->id)
+                                    <a href="{{ url('articles/'.$article->id.'/edit') }}" class="btn btn-success">编辑</a>
+                                    <form action="{{ url('articles/'.$article->id) }}" method="POST" style="display: inline;">
+                                        {{ method_field('DELETE') }}
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-danger">删除</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

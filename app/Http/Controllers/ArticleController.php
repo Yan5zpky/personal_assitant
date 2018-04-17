@@ -90,23 +90,7 @@ class ArticleController extends Controller
             $articles = Article::search($request->contentsearch)->paginate(6);
             $articles->appends(['contentsearch' => $request->contentsearch]); // add params to paginate links
         } else {
-            if ($request->has('page')) { // page cached
-                if (!Cache::has('articles'.'-'.$request->page)) {
-                    $articles = Cache::remember('articles'.'-'.$request->page, '14400', function () {
-                       return  Article::paginate(6);
-                    });
-                } else {
-                    $articles = Cache::get('articles'.'-'.$request->page);
-                }
-            } else {
-                if (!Cache::has('articles')) {
-                    $articles = Cache::remember('articles', '14400', function () {
-                        return  Article::paginate(6);
-                    });
-                } else {
-                    $articles = Cache::get('articles');
-                }
-            }
+            $articles = Article::paginate(6);
         }
         return view('article/search',compact('articles'));
     }
