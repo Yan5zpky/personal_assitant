@@ -86,9 +86,9 @@ class ArticleController extends Controller
 //            $articles = $builder->paginate(6);
 //            $articles->appends(['titlesearch' => $request->titlesearch]); // add params to paginate links
 //        }
-        if ($request->has('titlesearch')) {
-            $articles = Article::search($request->titlesearch)->paginate(6);
-            $articles->appends(['titlesearch' => $request->titlesearch]); // add params to paginate links
+        if ($request->has('contentsearch')) {
+            $articles = Article::search($request->contentsearch)->paginate(6);
+            $articles->appends(['contentsearch' => $request->contentsearch]); // add params to paginate links
         } else {
             if ($request->has('page')) { // page cached
                 if (!Cache::has('articles'.'-'.$request->page)) {

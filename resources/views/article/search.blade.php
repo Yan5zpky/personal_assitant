@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="text" name="titlesearch" class="form-control" placeholder="Enter Title For Search" value="{{ old('titlesearch') }}">
+                            <input type="text" name="contentsearch" class="form-control" placeholder="Enter Content For Search" value="{{ old('contentsearch') }}">
                             <br>
                             <a href="{{ url('articles-lists') }}" class="btn btn-success">重置搜索</a>
                         </div>
