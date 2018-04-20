@@ -43,6 +43,6 @@ class SendCommentEmail implements ShouldQueue
         $email = $user->email;
         $comment = $this->comment;
 
-        Mail::to($email)->send(new NewComment($comment));
+        Mail::to($email)->queue(new NewComment($comment));
     }
 }
