@@ -34,9 +34,21 @@ class QueryListener
             $log = new Logger('sql');
             $fileName = storage_path('logs/sql/'.date('Y-m-d').'.log');
             $log->pushHandler(new StreamHandler($fileName, Logger::INFO));
-            $sql = str_replace("?", "'%s'", $event->sql);
-            $sql .= "[] [] Execute time: ".$event->time."ms ";
-            $log->info($sql);
+            foreach ($event->bindings as $i => $binding) {
+                if ($binding instanceof \DateTime) {
+                    $event->bindings[ $i ] = $binding->format('\'Y-m-d H:i:s\'');
+                } else {
+                    if (is_string($binding)) {
+                        $event->bindings[ $i ] = "'$binding'";
+                    }
+                }
+            }
+            $boundSql = str_replace(['%', '?'], ['%%', '%s'], $event->sql);
+            $boundSql = vsprintf($boundSql, $event->bindings);
+            $log->info(
+                "TIME - {$event->time}ms\n" .
+                "BOUND QUERY: $boundSql;"
+            );
         }
     }
 }
