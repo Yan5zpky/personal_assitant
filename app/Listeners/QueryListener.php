@@ -35,7 +35,7 @@ class QueryListener
             $fileName = storage_path('logs/sql/'.date('Y-m-d').'.log');
             $log->pushHandler(new StreamHandler($fileName, Logger::INFO));
             $sql = str_replace("?", "'%s'", $event->sql);
-            $sql .= " execute time: ".$event->time."ms ";
+            $sql .= "[] [] Execute time: ".$event->time."ms ";
             $log->info($sql);
         }
     }
