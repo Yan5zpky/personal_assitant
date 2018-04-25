@@ -21,7 +21,8 @@ class SendCommentEmail implements ShouldQueue
 
     /**
      * Create a new job instance.
-     *
+     * @param $user
+     * @param $comment
      * @return void
      */
     public function __construct(User $user, Comment $comment)
