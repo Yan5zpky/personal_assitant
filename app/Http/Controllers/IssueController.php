@@ -76,7 +76,7 @@ class IssueController extends Controller
             $builder->where('deadline', '<=', "$request->date");
             $builder->where('user_id', '=', $request->user()->id);
             $issues = $builder->paginate(6);
-            $issues->appends(['month' => $request->month]); // add params to paginate links
+            $issues->appends(['date' => $request->date]); // add params to paginate links
         } else {
             $issues = Issue::where('user_id', '=', $request->user()->id)->paginate(6);
         }
