@@ -48,9 +48,9 @@
                                 {!! Parsedown::instance()->setMarkupEscaped(true)->text($comment->content) !!}
                             </p>
                         </div>
-                        <div class="reply" style="text-align: right; padding: 5px;">
-                            <a href="#new" onclick="reply(this);">回复</a>
-                        </div>
+                        {{--<div class="reply" style="text-align: right; padding: 5px;">--}}
+                            {{--<a href="#new" onclick="reply(this);">回复</a>--}}
+                        {{--</div>--}}
                     </div>
 
                 @endforeach
@@ -82,11 +82,11 @@
         </div>
 
         <script>
-            function reply(a) {
-                var nickname = a.parentNode.parentNode.firstChild.nextSibling.getAttribute('data');
-                var textArea = document.getElementById('newFormContent');
-                textArea.innerHTML = '@'+nickname+' ';
-            }
+            // function reply(a) {
+            //     var nickname = a.parentNode.parentNode.firstChild.nextSibling.getAttribute('data');
+            //     var textArea = document.getElementById('newFormContent');
+            //     textArea.innerHTML = '@'+nickname+' ';
+            // }
         </script>
 
     </div>
