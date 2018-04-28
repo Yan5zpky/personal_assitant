@@ -36,6 +36,7 @@ class ArticleController extends Controller
         $article->is_active = 1;
 
         if ($article->save()) {
+            Cache::flush();
             return redirect('articles-lists');
         } else {
             return redirect()->back()->withInput()->withErrors('保存失败！');
@@ -73,6 +74,7 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         Article::find($id)->delete();
+        Cache::flush();
         return redirect()->back()->withInput()->withErrors('删除成功！');
     }
 
@@ -90,7 +92,23 @@ class ArticleController extends Controller
             $articles = Article::search($request->contentsearch)->paginate(6);
             $articles->appends(['contentsearch' => $request->contentsearch]); // add params to paginate links
         } else {
-            $articles = Article::paginate(6);
+            if ($request->has('page')) { // page cached
+                if (!Cache::has('articles'.'-'.$request->page)) {
+                    $articles = Cache::remember('articles'.'-'.$request->page, '14400', function () {
+                        return  Article::paginate(6);
+                    });
+                } else {
+                    $articles = Cache::get('articles'.'-'.$request->page);
+                }
+            } else {
+                if (!Cache::has('articles')) {
+                    $articles = Cache::remember('articles', '14400', function () {
+                        return  Article::paginate(6);
+                    });
+                } else {
+                    $articles = Cache::get('articles');
+                }
+            }
         }
         return view('article/search',compact('articles'));
     }

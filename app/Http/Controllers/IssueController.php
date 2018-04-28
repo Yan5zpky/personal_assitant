@@ -73,7 +73,7 @@ class IssueController extends Controller
     {
         $builder = Issue::query();
         if($request->has('date')){
-            $builder->where('deadline', '<=', "$request->date");
+            $builder->where('deadline', '=', "$request->date");
             $builder->where('user_id', '=', $request->user()->id);
             $issues = $builder->paginate(6);
             $issues->appends(['date' => $request->date]); // add params to paginate links
